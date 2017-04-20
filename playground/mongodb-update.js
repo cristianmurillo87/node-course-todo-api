@@ -8,7 +8,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
     console.log('Connected to MongoDB server');
 
     //findOneAndUpdate
-/*    db.collection('Todos').findOneAndReplace({ 
+    db.collection('Todos').findOneAndReplace({ 
         _id: new ObjectID('58f7fbd4d56a12bd24c6c884')
     },{
         $set:{
@@ -18,7 +18,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
         returnOriginal: true
     }).then((result) =>{
         console.log(result);
-    });*/
+    });
     
     db.collection('Users').findOneAndReplace({ 
         _id: new ObjectID('58f6e9cbd5b39ddead3dcc2f')
