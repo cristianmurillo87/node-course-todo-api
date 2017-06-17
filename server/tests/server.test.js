@@ -140,6 +140,60 @@ describe('DELETE /todo/:id', () => {
             .expect(404)
             .end(done);
     });
+});
 
+describe('PATCH /todos/:id',(req, res) => {
+    it('should update the todo', (done) =>{
+
+        var myTodo = {
+            id: todos[0]._id.toHexString(),            
+            text: "Todo updated today for the second time",
+            completed: true
+        };
+
+        request(app)
+            .patch(`/todos/${myTodo.id}`)
+            .send(myTodo)
+            .expect(200)
+            .expect((res) =>{
+                expect(res.body.todo.text).toBe(myTodo.text);
+                expect(res.body.todo.completed).toBe(myTodo.completed);
+                expect(res.body.todo.completedAt).toBeA('number');
+            })
+            .end(done);
+    });
+
+    it('should clear completedAt when todo is not completed', (done) =>{
+
+        var myTodo = {
+            id: todos[1]._id.toHexString(),            
+            text: "Todo updated today for the third time",
+            completed: false
+        };
+
+        request(app)
+            .patch(`/todos/${myTodo.id}`)
+            .send(myTodo)
+            .expect(200)
+            .expect((res) =>{
+                expect(res.body.todo.text).toBe(myTodo.text);
+                expect(res.body.todo.completed).toBe(myTodo.completed);
+                expect(res.body.todo.completedAt).toNotExist();
+            })
+            .end(done);
+    });
+
+
+    it('should return 404 if todo does not exists', (done) => {
+        
+        var id = new ObjectID().toHexString();
+
+        request(app)
+            .patch(`/todos/${id}`)
+            .send({text: "Some random todo"})
+            .expect(404)
+            .end(done);
+
+    });
 
 });
