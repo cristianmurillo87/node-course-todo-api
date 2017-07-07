@@ -20,7 +20,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
     });
 
 
-/*    db.collection('Users').insertOne({
+    /*db.collection('Users').insertOne({
         name: 'Cristian Murillo',
         age: 29,
         location: 'Cali'
